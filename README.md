@@ -17,10 +17,10 @@ invoked by a LLM.
 After cloning repo, run following command to setup a virtual environment and 
 install python dependencies:
 ```
-cd llm_tool
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+$> cd llm_tool
+$> python -m venv .venv
+$> source .venv/bin/activate
+$> pip install -r requirements.txt
 ```
 
 ### Groq (Recommended)
@@ -34,14 +34,10 @@ GROQ_API_KEY=<groq api key>
 
 ### Run Demo
 
-Run demo app to ask questions and check weather forecast
+Run demo app to ask questions and check weather forecast. _(LLM output can vary, but should be similar)_
 ```
-cd src
-python demo.py
-```
-
-Output (_LLM output can vary, but should be similar_)
-```
+$> cd src
+$> python demo.py
 Enter prompt (⏎ or ^C to exit): Who was the first president of the united states?
 George Washington was the first president of the United States.
 Enter prompt (⏎ or ^C to exit): Who was the first ever female prime minister?
@@ -56,16 +52,18 @@ The temperature in London next Monday will be between 61.6°F and 74.9°F.
 In addition to `demo.py`, the `docextractor.py` and `llmtoolutil.py` can also
 be run from the command line.
 
-`docextractor.py` output: Prints doc and dictionary returned by llm
+Running `docextractor.py` prints docstring and dictionary returned by llm
 ```
+$> python docextractor.py
 INFO:root:Prints hello to the user.
 
 user -- Name of the user. (default=World)
 INFO:root:{'summary': 'Prints hello to the user.', 'args': {'user': 'Name of the user. (default=World)'}}
 ```
 
-`llmtoolutil.py` output: `valid_func` is added as tool exposed to llm, but `invalid_func` is not.
+Running `llmtoolutil.py` adds `valid_func` as tool exposed to llm, but not `invalid_func`.
 ```
+$> python llmtoolutil.py
 INFO:root:✅ Function `valid_func` passes all checks.
 
 CRITICAL:root:❌ Function `invalid_func` not added. It may not work as expected when included in prompt.
@@ -79,8 +77,8 @@ INFO:root:[{'type': 'function', 'function': {'name': 'valid_func', 'description'
 
 The repo includes pytests for the different code files:
 ```
-cd tests
-pytest
+$> cd tests
+$> pytest
 
 ======================================= test session starts =======================================
 platform darwin -- Python 3.11.6, pytest-8.3.2, pluggy-1.5.0
