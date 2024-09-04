@@ -35,9 +35,9 @@ class LLMClient():
         self.additional_headers = addn_headers
 
 
-    def request(self, prompt: str) -> str:
+    def request(self, prompt:str) -> str:
         """
-        Request LLM API endpoint and return assistant response content as
+        Send request to endpoint and return assistant response content as
         string.
 
         This request handler will extract the assistant's response, add it to
@@ -47,6 +47,7 @@ class LLMClient():
         set `logging.getLogger().setLevel(logging.DEBUG)` to see debug logs
 
         prompt -- User prompt to send to LLM.
+        returns -- string response
         """
         self.history.append({ 'role': 'user', 'content': prompt })
 

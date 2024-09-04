@@ -11,26 +11,27 @@ class _LLMToolUtil:
     is created at the end of the code file.
 
     Usage in code:
-    * Use the `llm_tool` decorator to identify to be exposed in prompt
+    * Use the `llm_tool_util.llm_tool` decorator to identify to be exposed in prompt
     * Add docstring for python function
     ```
     from llmtoolutil import llm_tool_util
 
     @llm_tool_util.llm_tool
-    def func_to_expose_to_llm(some_param: string) -> dict:
+    def func_to_expose_to_llm(some_param:string) -> dict:
         ...
     ```
 
-    Usage in prompt
+    Include JSON in prompt to make LLM aware of available tools
     ```
     prompt = f'...\n{llm_tool_util.generate_tool_markup()}'
     ```
 
-    Usage in assistant response handling
+    Usage in app/assistant response handling
     ```
     llm_response = client.request(...)
-    tool_response = llm_tool_util.handle_tool(llm_response)
-    if tool_response is not None:
+
+    if llm_tool_util.can_handle_tool(llm_response) == True:
+        tool_response = llm_tool_util.handle_tool(llm_response)
         llm_response = client.request(tool_response)
     ```
     """
@@ -44,7 +45,7 @@ class _LLMToolUtil:
         self._tool_docs = {}
 
 
-    def llm_tool(self, func: callable) -> callable:
+    def llm_tool(self, func:callable) -> callable:
         """
         Decorator for tools that should be exposed and made avaialble to the
         LLM. Unlike classic decorators, this does NOT wrap the original
@@ -95,9 +96,17 @@ class _LLMToolUtil:
             logging.critical(f'❌ Function `{name}` not added. It may not work as expected when included in prompt.\n * {" * ".join(warnings)}')
 
         return func
+    
+
+    def _clear_tools(self):
+        """
+        Clear all current tools. Used primarily for testing.
+        """
+        self._tool_funcs = {}
+        self._tool_docs = {}
 
 
-    def _map_type_to_name(self, t: type) -> str:
+    def _map_type_to_name(self, t:type) -> str:
         """
         Return general type names, not Python specific class names
 
@@ -175,19 +184,11 @@ class _LLMToolUtil:
             markup.append(tool)
 
         return markup
-    
-
-    def _clear_tools(self):
-        """
-        Clear all current tools. Used primarily for testing.
-        """
-        self._tool_funcs = {}
-        self._tool_docs = {}
 
 
-    def can_handle_tool_response(self, llm_response: str) -> bool:
+    def can_handle_tool_response(self, llm_response:str) -> bool:
         """
-        Similar to @handle_tool_response. Returns bool if can be invoked.
+        See @handle_tool_response. Returns bool if tool can be invoked.
 
         @TODO: Add tests
         """
@@ -203,7 +204,7 @@ class _LLMToolUtil:
             return False
 
 
-    def handle_tool_response(self, llm_response: str) -> dict | None:
+    def handle_tool_response(self, llm_response:str) -> dict | None:
         """
         If applicable, this function invokes the registered tool and returns
         the response from the tool.

@@ -18,16 +18,11 @@ load_dotenv()
 class Demo:
     def __init__(self) -> None:
         """
-        Initialize Demo.
+        Initialize Demo App.
         """
         system_prompt = open(f'{dirname(abspath(__file__))}/prompts/demo.md').read()
-        tools_json = json.dumps(llm_tool_util.generate_tool_markup())
-
-        prompt = f"""
-        Today's date: {datetime.today().strftime('%Y-%m-%d')}
-        {system_prompt}
-        {tools_json}
-        """
+        prompt = system_prompt.format(date=datetime.today().strftime('%Y-%m-%d'),
+                                      tools=json.dumps(llm_tool_util.generate_tool_markup()))
         logging.debug(prompt)
 
         # Initialize llm client. Use `llama-3.1-70b-versatile` model
@@ -38,16 +33,16 @@ class Demo:
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 
 
-    def request(self, prompt: str) -> str:
+    def request(self, prompt:str) -> str:
         """
         Once `LLMClient` returns a response:
-        - Invoke `LLMToolGen.handle_tool_response`
-        - If the response is a tool response, the function invokes the tool and returns
-        the tool's response, else returns None
-        - If a tool response is returned, invoke the LLM with the result as JSON
-        - A new, response at this point will be returned, based on the tool response
-
-        Note, this implementation  
+        - Check if `llm_tool_util.can_handle_tool_response` can handle response
+        - If so, invoke `llm_tool_util.handle_tool_response`. The function 
+        invokes the tool and returns the tool's response, else returns None
+        - If a tool response is returned, invoke the LLM with the result as
+        JSON
+        - A new, response at this point will be returned, based on the tool
+        response
         """
 
         response = self._client.request(prompt)

@@ -8,8 +8,8 @@ from llmtoolutil import llm_tool_util
 weather_url = 'https://api.open-meteo.com/v1/forecast'
 
 @llm_tool_util.llm_tool
-def get_weather_forecast(lat: float,
-                         lon: float,
+def get_weather_forecast(lat:float,
+                         lon:float,
                          forecast_date:datetime = datetime.today().strftime('%Y-%m-%d')
                          ) -> dict:
     '''

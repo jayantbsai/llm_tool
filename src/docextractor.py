@@ -26,7 +26,7 @@ class DocExtractor:
                                  model_options={ "temperature": 0.1 },
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 
-    def get_func_doc(self, func: callable) -> str | None:
+    def get_func_doc(self, func:callable) -> str | None:
         """
         Get doc string from function.
 
@@ -39,7 +39,7 @@ class DocExtractor:
         return doc
 
 
-    def get_func_details(self, doc: str) -> dict:
+    def get_func_details(self, doc:str) -> dict:
         """
         Function to extract the tool details. This is based on the documented in code.
 

@@ -1,8 +1,8 @@
 # LLM Tool
-Tool to extract and convert the Python docstring from a function into a tool
-that can be invoked by a LLM.
+Tool to extract and convert the Python docstring into a tool that can be 
+invoked by a LLM.
 
-## General Notes
+### General Notes
 * The goal of the code is to be bare-metal and minimize the use of libraries.
 * This tool is based on [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling) documentation
 * This code is a POC
@@ -11,6 +11,7 @@ that can be invoked by a LLM.
 * The code uses Llama 3.1 8b & 70b family of models.
     * [8b](https://console.groq.com/docs/models#llama-31-8b-preview): Python docstring extraction
     * [70b](https://console.groq.com/docs/models#llama-31-70b-preview): Tool invocation and simple assistant response
+
 
 ## Setup
 After cloning repo, run following command to setup a virtual environment and 
@@ -50,7 +51,7 @@ The temperature in London next Monday will be between 61.6°F and 74.9°F.
 ```
 
 
-## Running Code
+### Running Code
 
 In addition to `demo.py`, the `docextractor.py` and `llmtoolutil.py` can also
 be run from the command line.
@@ -74,7 +75,7 @@ INFO:root:[{'type': 'function', 'function': {'name': 'valid_func', 'description'
 ```
 
 
-## Running Tests
+### Running Tests
 
 The repo includes pytests for the different code files:
 ```
@@ -127,6 +128,6 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
 
 
-### References:
+## References:
 * [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling)
 * [Open-Mateo Weather Forecast API](https://open-meteo.com/en/docs)

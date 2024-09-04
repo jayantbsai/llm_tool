@@ -37,7 +37,7 @@ def one_arg_no_type_no_return(param):
 
 # One arg with type & int type
 # Will fail bcoz no function description, only arg description
-def one_arg_no_doc_desc(param: str) -> int:
+def one_arg_no_doc_desc(param:str) -> int:
     """
     param -- Some parameter that will be printed
     """
@@ -46,7 +46,7 @@ def one_arg_no_doc_desc(param: str) -> int:
 
 # One arg with type, but no return type
 # Will fail due to missing return type
-def one_arg_type_no_return(param: int):
+def one_arg_type_no_return(param:int):
     """
     This function takes in an int param and returns a string
 
@@ -69,7 +69,7 @@ def one_arg_no_type_yes_return(param) -> int:
 # Two args with types, but no return type
 # Will fail due to missing return type
 # @TODO: Fix test, as it fails
-def two_args_yes_type_no_return(anInt: int, aList: list):
+def two_args_yes_type_no_return(anInt:int, aList:list):
     """
     Annotated args with no return specified.
 
@@ -81,7 +81,9 @@ def two_args_yes_type_no_return(anInt: int, aList: list):
 
 # Three args with types, 1 default, return type, & docstring
 # Will pass
-def three_args_yes_type_yes_return(some_string:str, some_other_string:str, glue:int=1) -> int:
+def three_args_yes_type_yes_return(some_string:str,
+                                   some_other_string:str,
+                                   glue:int=1) -> int:
     """
     Take two strings, join them with 1 multiplied by glue and return its length.
 
@@ -122,7 +124,7 @@ def just_test_types(a: int,
 
 # Function with arg & return types and docstring
 # Will pass
-def connect_to_next_port(minimum: int) -> int:
+def connect_to_next_port(minimum:int) -> int:
     """Connects to the next available port.
 
     Args:
