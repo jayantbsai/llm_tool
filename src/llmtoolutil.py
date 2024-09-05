@@ -1,5 +1,6 @@
 import logging
 import json
+from datetime import datetime
 
 from inspect import Parameter, getfullargspec, signature
 from docextractor import DocExtractor
@@ -130,6 +131,29 @@ class _LLMToolUtil:
         return t.__name__
 
 
+    def _convert_type(self, value:any, to:type) -> any:
+        """
+        Attempts to convert value to specified type.
+
+        value - Object to be converted
+        to - New type for Object
+        """
+        try:
+            match to.__name__:
+                case 'int':
+                    return int(value)
+                case 'float':
+                    return float(value)
+                case 'bool':
+                    return bool(value)
+                case 'datetime.datetime':
+                    return datetime.strptime(value, '%Y-%m-%d')
+        except Exception as e:
+            logging.debug('Unable to convert type ({e})')
+
+        return value
+
+
     def generate_tool_markup(self) -> list:
         """
         Using the list of tools, marked as `llm_tool`, this method generates
@@ -226,8 +250,18 @@ class _LLMToolUtil:
             tool_json = json.loads(llm_response)
             if 'name' in tool_json and 'parameters' in tool_json:
                 tool_name = tool_json['name']
+
+                # Ensure argument is of correct type
+                func = self._tool_funcs[tool_name]
+                annos = getfullargspec(func).annotations
+
+                params:dict = tool_json['parameters']
+                for key, value in params.items():
+                    params[key] = self._convert_type(value, annos[key])
+
+                # invoke tool
                 if tool_name in self._tool_funcs:
-                    return self._tool_funcs[tool_name](**tool_json['parameters'])
+                    return func(**params)
         except ValueError as ve:
             logging.debug(ve)
             return None
