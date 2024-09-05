@@ -124,9 +124,10 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 * Add tests for `llmtoolgen.can_handle_tool_response` & `llmtoolgen.handle_tool_response`
 * Update `doc_extractor` & `demo` prompts to reduce errors
     * `two_args_yes_type_no_return` extraction summary periodically returns `""`
-    * `dates` are not in `YYYY-MM-DD` format
+    * `dates` are sometimes not in `YYYY-MM-DD` format
     * General knowledge questions should use training data and not non-existent tools
 * Handle cases where Groq inference fails/exceeds rate limits
 * Fix issue when `pytest` on full test suite leads to higher test failure rate
+* Add support for multiple tool invocations in single LLM response
 * Add support for [Llama 3.1 custom tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#user-defined-custom-tool-calling)
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
