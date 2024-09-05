@@ -114,6 +114,12 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 ```
 
 
+## References:
+* [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling)
+* [OpenAI Function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
+* [Open-Mateo Weather Forecast API](https://open-meteo.com/en/docs)
+
+
 ## TODOs:
 * Add tests for `llmtoolgen.can_handle_tool_response` & `llmtoolgen.handle_tool_response`
 * Update `doc_extractor` & `demo` prompts to reduce errors
@@ -124,8 +130,3 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 * Fix issue when `pytest` on full test suite leads to higher test failure rate
 * Add support for [Llama 3.1 custom tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#user-defined-custom-tool-calling)
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
-
-
-## References:
-* [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling)
-* [Open-Mateo Weather Forecast API](https://open-meteo.com/en/docs)
