@@ -80,4 +80,4 @@ if __name__ == "__main__":
         except KeyboardInterrupt as ki:
             break
         except Exception as e:
-            print(f'Exception: {e}. ⏎ or ^C to exit.')
+            print(f'Exception: {e}')
