@@ -33,6 +33,7 @@ class DocExtractor:
         func -- Function to extract docstring from
         returns -- cleaned docstring or None, if no docstring
         """
+        # get and clean function doc
         doc = getdoc(func)
         doc = cleandoc(doc) if doc is not None else doc
         logging.debug(doc)
@@ -65,6 +66,7 @@ class DocExtractor:
         doc -- docstring for function
         returns -- dictionary with summary & args
         """
+        # fetch function details using LLM
         str_res = self._client.request(doc)
         if "```json" in str_res:
             str_res = str_res[len("```json"):]
@@ -72,6 +74,7 @@ class DocExtractor:
                 str_res = str_res[:str_res.index("```")]
         logging.debug(str_res)
 
+        # delete 'returns' as we only need function args
         res_dict = json.loads(str_res)
         if 'returns' in res_dict['args']:
             del res_dict['args']['returns']

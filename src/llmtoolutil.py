@@ -88,6 +88,7 @@ class _LLMToolUtil:
             if len(missing_params) > 0:
                 warnings.append(f'Missing argument summary{"s" if len(missing_params) > 1 else ""} for: `{", ".join(missing_params)}`\n')
 
+        # if no warnings, add function to collection
         if len(warnings) == 0:
             self._tool_funcs[name] = func
             self._tool_docs[name] = doc_json
@@ -114,6 +115,7 @@ class _LLMToolUtil:
         t -- Type
         returns -- String name for type
         """
+        # based on type, return a reader friendly type
         match t.__name__:
             case 'str':
                 return 'string'
@@ -219,9 +221,7 @@ class _LLMToolUtil:
         try:
             tool_json = json.loads(llm_response)
             if 'name' in tool_json and 'parameters' in tool_json:
-                tool_name = tool_json['name']
-                if tool_name in self._tool_funcs:
-                    return True
+                return tool_json['name'] in self._tool_funcs
         except ValueError as ve:
             return False
         else:
@@ -251,7 +251,7 @@ class _LLMToolUtil:
             if 'name' in tool_json and 'parameters' in tool_json:
                 tool_name = tool_json['name']
 
-                # Ensure argument is of correct type
+                # ensure argument is of correct type
                 func = self._tool_funcs[tool_name]
                 annos = getfullargspec(func).annotations
 
