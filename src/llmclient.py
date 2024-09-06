@@ -4,9 +4,9 @@ import logging
 
 class LLMClient():
     """
-    Simple LLM API wrapper client to invoke and return LLM response.
+    Simple LLM API wrapper client to call and return LLM response.
 
-    This client is bare-bones and does not use any libraries, it simply invokes
+    This client is bare-bones and does not use any libraries, it simply calls
     the LLM thru' the API endpoint.
 
     @TODO: Add ability to control whether to send history of messages

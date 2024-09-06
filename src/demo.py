@@ -37,10 +37,9 @@ class Demo:
         """
         Once `LLMClient` returns a response:
         - Check if `llm_tool_util.can_handle_tool_call` can handle response
-        - If so, invoke `llm_tool_util.handle_tool_call`. The function 
+        - If so, call `llm_tool_util.handle_tool_call`. The function 
         invokes the tool and returns the tool's response, else returns None
-        - If a tool response is returned, invoke the LLM with the result as
-        JSON
+        - If a tool response is returned, call the LLM with the result as JSON
         - A new, response at this point will be returned, based on the tool
         response
         """
@@ -48,8 +47,8 @@ class Demo:
         response = self._client.request(prompt)
         logging.debug(f"response = {response}")
 
-        # if model responds that there is no tool/function to answer OR invokes
-        # a non-existent tool, force it use training data
+        # if model responds that there is no tool/function to answer OR calls a
+        # non-existent tool, force it use training data
         if ((response.startswith('No function available')
              or response.startswith('No function call available')
              or response.startswith('No tool available'))

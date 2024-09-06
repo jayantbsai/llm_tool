@@ -1,16 +1,16 @@
 # LLM Tool
-Tool to extract and convert the Python docstring into a tool that can be 
-invoked by a LLM.
+Tool to extract and convert the Python function into a tool that can be called
+by a model.
 
 ### General Notes
 * The goal of the code is to be bare-metal and minimize the use of libraries.
 * This tool is based on [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling) documentation
 * This code is a POC
     * It has NOT been tested extensively across different LLMs
-    * Prompts have not been optimized to ensure LLM errors/hallucination
+    * Prompts have not been optimized to ensure model errors/hallucination
 * The code uses Llama 3.1 8b & 70b family of models.
     * [8b](https://console.groq.com/docs/models#llama-31-8b-preview): Python docstring extraction
-    * [70b](https://console.groq.com/docs/models#llama-31-70b-preview): Tool invocation and simple assistant response
+    * [70b](https://console.groq.com/docs/models#llama-31-70b-preview): Tool calling and demo assistant response
 
 
 ## Setup
@@ -34,7 +34,7 @@ GROQ_API_KEY=<groq api key>
 
 ### Run Demo
 
-Run demo app to ask questions and check weather forecast. _(LLM output can vary, but should be similar)_
+Run demo app to ask questions and check weather forecast. _(model output can vary, but should be similar)_
 ```
 (.venv) llm_tool % cd src
 (.venv) src % python demo.py
@@ -52,7 +52,7 @@ The temperature in London next Monday will be between 61.6°F and 74.9°F.
 In addition to `demo.py`, the `docextractor.py` and `llmtoolutil.py` can also
 be run from the command line.
 
-Running `docextractor.py` prints docstring and dictionary returned by llm
+Running `docextractor.py` prints docstring and dictionary returned by model
 ```
 (.venv) src % python docextractor.py
 INFO:root:Prints hello to the user.
@@ -61,7 +61,7 @@ user -- Name of the user. (default=World)
 INFO:root:{'summary': 'Prints hello to the user.', 'args': {'user': 'Name of the user. (default=World)'}}
 ```
 
-Running `llmtoolutil.py` adds `valid_func` as tool exposed to llm, but not `invalid_func`.
+Running `llmtoolutil.py` adds `valid_func` as tool exposed to model, but not `invalid_func`.
 ```
 (.venv) src % python llmtoolutil.py
 INFO:root:✅ Function `valid_func` passes all checks.
@@ -108,6 +108,6 @@ tests/test_llmtoolutil.py ...............FFF............                        
     * General knowledge questions should use training data and not non-existent tools
 * Handle cases where Groq inference fails/exceeds rate limits
 * Fix issue when `pytest` on full test suite leads to higher test failure rate
-* Add support for multiple tool invocations in single LLM response
+* Add support for multiple tool calls in single model response
 * Add support for [Llama 3.1 custom tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#user-defined-custom-tool-calling)
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)

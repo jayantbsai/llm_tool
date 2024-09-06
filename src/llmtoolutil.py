@@ -51,7 +51,7 @@ class _LLMToolUtil:
         Decorator for tools that should be exposed and made avaialble to the
         LLM. Unlike classic decorators, this does NOT wrap the original
         function. It is used to collect the functions that are exposed to the
-        LLM and invoke them based on the LLM response.
+        model and invoke them based on the LLM response.
 
         func: Function to be made available
         """
@@ -214,11 +214,10 @@ class _LLMToolUtil:
 
     def is_tool_call(self, llm_response:str) -> bool:
         """
-        Checks whether the response is in JSON format and is for invoking a
-        tool. Returns bool if tool response. This method is different from
+        Checks whether the response is in JSON format and is a tool call.
+        Returns bool if tool response. This method is different from
         @can_handle_tool_call, it does not check whether there is a custom
-        tool registered to be invoked.
-        response.
+        tool registered to be called.
         """
         try:
             tool_json = json.loads(llm_response)
@@ -243,16 +242,16 @@ class _LLMToolUtil:
 
     def handle_tool_call(self, llm_response:str) -> dict | None:
         """
-        If applicable, this function invokes the registered tool and returns
-        the response from the tool.
+        If tool is available, invokes it and returns the response from the
+        tool.
 
-        llm_response -- Response returned by LLM, which could include tool
-        invocation
+        llm_response - Response returned by model, which could include tool
+        call.
 
         returns dictionary response from calling tool, else None. None is
         returned in the following cases:
         1. `llm_response` was a string and not JSON
-        2. The JSON was not for tool invocation
+        2. The JSON was not for custom tool call
         3. There was an exception parsing the JSON
         4. No tool with the `name` is available
         5. There was an exception invoking the tool
@@ -272,7 +271,7 @@ class _LLMToolUtil:
                 for key, value in params.items():
                     params[key] = self._convert_type(value, annos[key])
 
-                # invoke tool
+                # invoke custom tool
                 if tool_name in self._tool_funcs:
                     return func(**params)
         except ValueError as ve:

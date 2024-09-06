@@ -35,7 +35,7 @@ Example 2:
 """
 Make a network call to a url and return the response
 
-url -- URL to invoke
+url -- URL to call
 method -- HTTP method (GET/POST/PUT/DELETE)
 url_params -- Dictionary of url parameters
 returns -- response response payload
