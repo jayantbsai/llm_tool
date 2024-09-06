@@ -212,11 +212,24 @@ class _LLMToolUtil:
         return markup
 
 
-    def can_handle_tool_response(self, llm_response:str) -> bool:
+    def is_tool_call(self, llm_response:str) -> bool:
         """
-        See @handle_tool_response. Returns bool if tool can be invoked.
+        Checks whether the response is in JSON format and is for invoking a
+        tool. Returns bool if tool response. This method is different from
+        @can_handle_tool_call, it does not check whether there is a custom
+        tool registered to be invoked.
+        response.
+        """
+        try:
+            tool_json = json.loads(llm_response)
+            return 'name' in tool_json and 'parameters' in tool_json
+        except ValueError as ve:
+            return False
 
-        @TODO: Add tests
+
+    def can_handle_tool_call(self, llm_response:str) -> bool:
+        """
+        See @handle_tool_call. Returns bool if tool can be invoked.
         """
         try:
             tool_json = json.loads(llm_response)
@@ -228,7 +241,7 @@ class _LLMToolUtil:
             return False
 
 
-    def handle_tool_response(self, llm_response:str) -> dict | None:
+    def handle_tool_call(self, llm_response:str) -> dict | None:
         """
         If applicable, this function invokes the registered tool and returns
         the response from the tool.

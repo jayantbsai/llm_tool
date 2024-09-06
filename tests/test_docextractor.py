@@ -185,7 +185,7 @@ def test_get_func_doc(func, expected_doc):
         )
     ])
 
-def test_get_func_details(func, expected_dict):
+def test_get_func_doc_details(func, expected_dict):
     doc_extract = DocExtractor()
     doc = doc_extract.get_func_doc(func)
     assert(doc_extract.get_func_details(doc) == expected_dict)

@@ -1,6 +1,7 @@
 import pytest
 from fixture_functions import *
 from llmtoolutil import llm_tool_util
+from demo_tools.weather_tool import get_weather_forecast
 
 import logging
 import io
@@ -232,3 +233,85 @@ def test_get_func_details(func, expected_list):
     assert(llm_tool_util.generate_tool_markup() == expected_list)
 
     llm_tool_util._clear_tools()
+
+
+
+### Test llm_tool.is_tool_call ###
+
+@pytest.mark.parametrize('model_response, expected', [
+    (
+        '{ "name": "get_top_gold_medal_winning_countries", "parameters": { "year": "2020", "city": "tokyo" } }',
+        True
+    ),
+    (
+        '{ "name": "get_top_gold_medal_winning_countries" }',
+        False
+    ),
+    (
+        '{ "parameters": { "year": "2020", "city": "tokyo" } }',
+        False
+    ),
+    (
+        '{ "name": "get_weather_forecast", "parameters": { "lat": "37.7749", "lon": "-122.4194", "forecast_date": "2024-09-06" } }',
+        True
+    ),
+    (
+        'The first president of the United States was George Washington.',
+        False
+    )
+])
+
+def test_is_tool_call(model_response:str, expected:str):
+    assert(llm_tool_util.is_tool_call(model_response) == expected)
+
+
+### Test llm_tool_response.can_handle_model_response
+
+@pytest.mark.parametrize('tools, model_response, expected', [
+    (
+        [],
+        '{ "name": "get_top_gold_medal_winning_countries", "parameters": { "year": "2020", "city": "tokyo" } }',
+        False
+    ),
+    (
+        [],
+        '{ "name": "get_top_gold_medal_winning_countries" }',
+        False
+    ),
+    (
+        [],
+        '{ "parameters": { "year": "2020", "city": "tokyo" } }',
+        False
+    ),
+    (
+        [connect_to_next_port],
+        '{ "name": "connect_to_next_port", "parameters": { "minimum": "8080" } }',
+        True
+    ),
+    (
+        [connect_to_next_port],
+        '{ "name": "get_top_gold_medal_winning_countries", "parameters": { "year": "2020", "city": "tokyo" } }',
+        False
+    ),
+    (
+        [get_weather_forecast, connect_to_next_port],
+        '{ "name": "get_weather_forecast", "parameters": { "lat": "37.7749", "lon": "-122.4194", "forecast_date": "2024-09-06" } }',
+        True
+    ),
+    (
+        [get_weather_forecast],
+        'The first president of the United States was George Washington.',
+        False
+    )
+])
+
+def test_can_handle_tool_call(tools, model_response, expected):
+    for tool in tools:
+        llm_tool_util.llm_tool(tool)
+
+    assert(llm_tool_util.can_handle_tool_call(model_response) == expected)
+
+    llm_tool_util._clear_tools()
+
+
+

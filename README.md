@@ -121,7 +121,7 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 
 
 ## TODOs:
-* Add tests for `llmtoolgen.can_handle_tool_response` & `llmtoolgen.handle_tool_response`
+* Add tests for `llmtoolgen.can_handle_tool_call` & `llmtoolgen.handle_tool_call`
 * Update `doc_extractor` & `demo` prompts to reduce errors
     * `two_args_yes_type_no_return` extraction summary periodically returns `""`
     * `dates` are sometimes not in `YYYY-MM-DD` format

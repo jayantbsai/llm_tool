@@ -25,7 +25,7 @@ class Demo:
                                       tools=json.dumps(llm_tool_util.generate_tool_markup()))
         logging.debug(prompt)
 
-        # Initialize llm client. Use `llama-3.1-70b-versatile` model
+        # initialize llm client. Use `llama-3.1-70b-versatile` model
         self._client = LLMClient(url='https://api.groq.com/openai/v1/chat/completions',
                                  model='llama-3.1-70b-versatile',
                                  system_prompt=prompt,
@@ -36,8 +36,8 @@ class Demo:
     def request(self, prompt:str) -> str:
         """
         Once `LLMClient` returns a response:
-        - Check if `llm_tool_util.can_handle_tool_response` can handle response
-        - If so, invoke `llm_tool_util.handle_tool_response`. The function 
+        - Check if `llm_tool_util.can_handle_tool_call` can handle response
+        - If so, invoke `llm_tool_util.handle_tool_call`. The function 
         invokes the tool and returns the tool's response, else returns None
         - If a tool response is returned, invoke the LLM with the result as
         JSON
@@ -48,14 +48,18 @@ class Demo:
         response = self._client.request(prompt)
         logging.debug(f"response = {response}")
 
-        # If LLM responds that there is no tool/function to answer, force it
-        # use training data
-        if response.startswith('No function available') or response.startswith('No function call available') or response.startswith('No tool available'):
+        # if model responds that there is no tool/function to answer OR invokes
+        # a non-existent tool, force it use training data
+        if ((response.startswith('No function available')
+             or response.startswith('No function call available')
+             or response.startswith('No tool available'))
+             or (llm_tool_util.is_tool_call(response)
+                 and llm_tool_util.can_handle_tool_call(response) == False)):
             response = self._client.request('Use your training data to respond.')
 
-        # Check llm_tool_util, for tools that can handle response
-        while llm_tool_util.can_handle_tool_response(response) == True:
-            tool_response = llm_tool_util.handle_tool_response(response)
+        # check llm_tool_util, for tools that can handle response
+        while llm_tool_util.can_handle_tool_call(response) == True:
+            tool_response = llm_tool_util.handle_tool_call(response)
             logging.debug(f"tool_response = {tool_response}")
             response = self._client.request(json.dumps(tool_response))
             logging.debug(f"response = {response}")
