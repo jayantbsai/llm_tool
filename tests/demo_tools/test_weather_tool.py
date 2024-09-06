@@ -2,9 +2,6 @@ import pytest
 import datetime
 from demo_tools.weather_tool import get_weather_forecast
 
-import logging
-logging.getLogger().setLevel(logging.INFO)
-
 @pytest.mark.parametrize('args, expected_date', [
     (
         (37.7749, -122.4194, 1), # SF
