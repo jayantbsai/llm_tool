@@ -21,19 +21,19 @@ class Demo:
         Initialize Demo App.
         """
         system_prompt = open(f'{dirname(abspath(__file__))}/prompts/demo.md').read()
-        prompt = system_prompt.format(date=datetime.today().strftime('%Y-%m-%d'),
-                                      tools=json.dumps(llm_tool_util.generate_tool_markup()))
-        logging.debug(prompt)
+        system_message = system_prompt.format(date=datetime.today().strftime('%Y-%m-%d'),
+                                              tools=json.dumps(llm_tool_util.generate_tool_markup()))
+        logging.debug(system_message)
 
         # initialize llm client. Use `llama-3.1-70b-versatile` model
         self._client = LLMClient(url='https://api.groq.com/openai/v1/chat/completions',
                                  model='llama-3.1-70b-versatile',
-                                 system_prompt=prompt,
+                                 system_message=system_message,
                                  model_options={ "temperature": 0.1 },
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 
 
-    def request(self, prompt:str) -> str:
+    def request(self, user_message:str) -> str:
         """
         Once `LLMClient` returns a response:
         - Check if `llm_tool_util.can_handle_tool_call` can handle response
@@ -44,7 +44,7 @@ class Demo:
         response
         """
 
-        response = self._client.request(prompt)
+        response = self._client.request(user_message)
         logging.debug(f"response = {response}")
 
         # if model responds that there is no tool/function to answer OR calls a
@@ -53,7 +53,7 @@ class Demo:
              or response.startswith('No function call available')
              or response.startswith('No tool available'))
              or (llm_tool_util.is_tool_call(response)
-                 and llm_tool_util.can_handle_tool_call(response) == False)):
+                 and not llm_tool_util.can_handle_tool_call(response))):
             response = self._client.request('Use your training data to respond.')
 
         # check llm_tool_util, for tools that can handle response
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            msg = input("Enter prompt (⏎ or ^C to exit): ")
+            msg = input("Enter message (⏎ or ^C to exit): ")
             if len(msg.strip()) == 0:
                 break
 

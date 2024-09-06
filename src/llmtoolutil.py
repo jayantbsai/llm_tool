@@ -29,11 +29,11 @@ class _LLMToolUtil:
 
     Usage in app/assistant response handling
     ```
-    llm_response = client.request(...)
+    model_response = client.request(...)
 
-    if llm_tool_util.can_handle_tool(llm_response) == True:
-        tool_response = llm_tool_util.handle_tool(llm_response)
-        llm_response = client.request(tool_response)
+    if llm_tool_util.is_tool_call(model_response) and llm_tool_util.can_handle_tool_call(model_response):
+        tool_response = llm_tool_util.handle_tool_call(model_response)
+        model_response = client.request(tool_response)
     ```
     """
 

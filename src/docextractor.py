@@ -22,7 +22,7 @@ class DocExtractor:
         """
         self._client = LLMClient(url='https://api.groq.com/openai/v1/chat/completions',
                                  model='llama-3.1-8b-instant',
-                                 system_prompt=open(f'{dirname(abspath(__file__))}/prompts/doc_extractor.md').read(),
+                                 system_message=open(f'{dirname(abspath(__file__))}/prompts/doc_extractor.md').read(),
                                  model_options={ "temperature": 0.1 },
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 

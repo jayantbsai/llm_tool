@@ -38,11 +38,11 @@ Run demo app to ask questions and check weather forecast. _(model output can var
 ```
 (.venv) llm_tool % cd src
 (.venv) src % python demo.py
-Enter prompt (⏎ or ^C to exit): Who was the first president of the united states?
+Enter message (⏎ or ^C to exit): Who was the first president of the united states?
 George Washington was the first president of the United States.
-Enter prompt (⏎ or ^C to exit): Who was the first ever female prime minister?
+Enter message (⏎ or ^C to exit): Who was the first ever female prime minister?
 Sirimavo Bandaranaike of Ceylon (now Sri Lanka) was the first female prime minister in the world, serving from 1960 to 1965 and then again from 1970 to 1977, and from 1994 to 2000.
-Enter prompt (⏎ or ^C to exit): What will the temperature be in London, next Monday?
+Enter message (⏎ or ^C to exit): What will the temperature be in London, next Monday?
 The temperature in London next Monday will be between 61.6°F and 74.9°F.
 ```
 
