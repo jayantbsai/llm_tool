@@ -79,17 +79,17 @@ The repo includes pytests for the different code files:
 ```
 (.venv) llm_tool % pytest
 
-=================================== test session starts ====================================
+================================== test session starts ===================================
 platform darwin -- Python 3.11.6, pytest-8.3.2, pluggy-1.5.0
 rootdir: /llm_tool
 collected 59 items
 
-tests/demo_tools/test_weather_tool.py .....                                           [  8%]
-tests/test_demo.py ....                                                               [ 15%]
-tests/test_docextractor.py ................F...                                       [ 49%]
-tests/test_llmtoolutil.py ...............FFF............                              [100%]
+tests/demo_tools/test_weather_tool.py .....                                         [  8%]
+tests/test_demo.py ....                                                             [ 15%]
+tests/test_docextractor.py ................F...                                     [ 49%]
+tests/test_llmtoolutil.py ...............FFF............                            [100%]
 
-======================================= FAILURES ===========================================
+====================================== FAILURES ==========================================
 ... output ommitted ...
 ```
 

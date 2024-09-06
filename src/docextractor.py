@@ -26,6 +26,7 @@ class DocExtractor:
                                  model_options={ "temperature": 0.1 },
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 
+
     def get_func_doc(self, func:callable) -> str | None:
         """
         Get doc string from function.
@@ -97,10 +98,8 @@ if __name__ == '__main__':
         """
         print(f'Hello {user}!')
 
-
     # Initial tool
     doc_extract = DocExtractor()
-
 
     # Test function to get docstring from function
     # """
@@ -110,7 +109,6 @@ if __name__ == '__main__':
     # """
     doc = doc_extract.get_func_doc(some_func)
     logging.info(doc)
-
 
     # Test function to convert function docstring to dictionary
     # {

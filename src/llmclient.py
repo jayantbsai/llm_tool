@@ -12,7 +12,6 @@ class LLMClient():
     @TODO: Add ability to control whether to send history of messages
     """
 
-
     def __init__(self,
                  url:str,
                  model:str,
