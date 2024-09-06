@@ -77,40 +77,20 @@ INFO:root:[{'type': 'function', 'function': {'name': 'valid_func', 'description'
 
 The repo includes pytests for the different code files:
 ```
-(.venv) llm_tool % cd tests
-(.venv) tests % pytest
+(.venv) llm_tool % pytest
 
-======================================= test session starts =======================================
+================================= test session starts ==================================
 platform darwin -- Python 3.11.6, pytest-8.3.2, pluggy-1.5.0
 rootdir: /llm_tool
-collected 47 items
+collected 59 items
 
-tests/demo_tools/test_weather_tool.py .....                                                  [ 10%]
-tests/test_demo.py ....                                                                      [ 19%]
-tests/test_docextractor.py ................F...                                              [ 61%]
-tests/test_llmtoolutil.py ..................                                                 [100%]
+tests/demo_tools/test_weather_tool.py .....                                       [  8%]
+tests/test_demo.py ....                                                           [ 15%]
+tests/test_docextractor.py ................                                       [ 49%]
+tests/test_llmtoolutil.py ...............FFF............                          [100%]
 
-=========================================== FAILURES ==============================================
-________________ test_get_func_details[two_args_yes_type_no_return-expected_dict5] ________________
-
-... output ommitted
-
-    def test_get_func_details(func, expected_dict):
-        doc_extract = DocExtractor()
-        doc = doc_extract.get_func_doc(func)
->       assert(doc_extract.get_func_details(doc) == expected_dict)
-E       AssertionError: assert {'args': {'aL...'summary': ''} == {'args': {'aL...n specified.'}
-E         
-E         Omitting 1 identical items, use -vv to show
-E         Differing items:
-E         {'summary': ''} != {'summary': 'Annotated args with no return specified.'}
-E         Use -v to get more diff
-
-tests/test_docextractor.py:191: AssertionError
-===================================== short test summary info =====================================
-FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_return-expected_dict5] - AssertionError: assert {'args': {'aL...'summary': ''} == {'args': {'aL...n specified.'}
-================================== 1 failed, 46 passed in 48.73s ==================================
-
+===================================== FAILURES =========================================
+... output ommitted ...
 ```
 
 
@@ -121,7 +101,7 @@ FAILED tests/test_docextractor.py::test_get_func_details[two_args_yes_type_no_re
 
 
 ## TODOs:
-* Add tests for `llmtoolgen.can_handle_tool_call` & `llmtoolgen.handle_tool_call`
+* Add tests for `llmtoolgen.handle_tool_call`
 * Update `doc_extractor` & `demo` prompts to reduce errors
     * `two_args_yes_type_no_return` extraction summary periodically returns `""`
     * `dates` are sometimes not in `YYYY-MM-DD` format

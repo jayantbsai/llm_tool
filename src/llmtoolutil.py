@@ -305,10 +305,8 @@ if __name__ == '__main__':
         """
         return f'Hello {user}!'
 
-
     @llm_tool_util.llm_tool
     def invalid_func(user: str) -> str:
         return f'Hello {user}!'
-
 
     logging.info(llm_tool_util.generate_tool_markup())
