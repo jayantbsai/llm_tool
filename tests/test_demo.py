@@ -10,7 +10,7 @@ from llmtoolutil import llm_tool_util
     ),
     (
         'What will the temperature be in London, next Monday?',
-        ['temperature', 'London', 'Monday']
+        ['temperature', 'precipitation', 'wind speed', 'London', 'Monday']
     ),
     (
         'Who were the top 3 gold medal winning countries in the Tokyo olympics?',

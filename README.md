@@ -109,5 +109,7 @@ tests/test_llmtoolutil.py ...............FFF............                        
 * Handle cases where Groq inference fails/exceeds rate limits
 * Fix issue when `pytest` on full test suite leads to higher test failure rate
 * Add support for multiple tool calls in single model response
+* Support functions to provide prompt additions for system/user messages
+* Format hints as part of tool response
 * Add support for [Llama 3.1 custom tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#user-defined-custom-tool-calling)
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
