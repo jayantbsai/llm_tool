@@ -36,7 +36,7 @@ def get_weather_forecast(lat:float, lon:float, date:datetime) -> dict:
     units = res_json['hourly_units']
 
     return {
-        'format_hint': 'Format response in a single sentence.',
+        'format_hint': 'Format response with temperature, precipitation, & wind speed in a single sentence.',
         'forecast': {
             'date': date,
             'temperature': f"{min(hourly['temperature_2m'])} - {max(hourly['temperature_2m'])} {units['temperature_2m']}",
