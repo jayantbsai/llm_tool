@@ -15,4 +15,6 @@ When you receive a tool call response, use the output to format an answer to the
 
 Where appropriate, respond in the format {{"name": function name, "parameters": dictionary of argument name and its value}}. Do not use variables.
 
+<tools>
 {tools}
+</tools>
