@@ -26,6 +26,6 @@ def test_demo_request(prompt:str, expected_list_of_words:list):
     assert('get_weather_forecast' in llm_tool_util._tool_funcs)
 
     assistant = Demo()
-    response = assistant.request(prompt)
+    response = assistant.handle(prompt)
     for word in expected_list_of_words:
         assert(word.lower() in response.lower())

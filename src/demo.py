@@ -33,7 +33,7 @@ class Demo:
                                  addn_headers={ 'Authorization': f'Bearer {getenv("GROQ_API_KEY")}' })
 
 
-    def request(self, user_message:str) -> str:
+    def handle(self, user_message:str) -> str:
         """
         Once `LLMClient` returns a response:
         - Check if `llm_tool_util.can_handle_tool_call` can handle response
@@ -82,7 +82,7 @@ if __name__ == "__main__":
             if len(msg.strip()) == 0:
                 break
 
-            print(assistant.request(msg))
+            print(assistant.handle(msg))
         except KeyboardInterrupt as ki:
             break
         except Exception as e:
