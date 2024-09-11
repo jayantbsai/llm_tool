@@ -16,7 +16,7 @@ def get_weather_forecast(lat:float, lon:float, date:datetime) -> dict:
     lon: Longitude for the location. ex: -122.4194
     date: Date to forecast weather in YYYY-MM-DD format. ex: 2024-07-29
 
-    returns: dictionary with date, min/max temperature, min/max precipitation, and min/max winds
+    returns: dictionary min/max temperature, precipitation, & wind speed
     '''
     params = {
         'latitude': lat,
@@ -42,5 +42,33 @@ def get_weather_forecast(lat:float, lon:float, date:datetime) -> dict:
             'temperature': f"{min(hourly['temperature_2m'])} - {max(hourly['temperature_2m'])} {units['temperature_2m']}",
             'precipitation': f"{min(hourly['precipitation'])} - {max(hourly['precipitation'])} {units['precipitation']}",
             'wind_speed': f"{min(hourly['wind_speed_10m'])} - {max(hourly['wind_speed_10m'])} {units['wind_speed_10m']}",
+        }
+    }
+
+
+def get_current_weather(lat, lon):
+    '''
+    Returns current temperature, precipitation, and wind speed
+    '''
+    params = {
+        'latitude': lat,
+        'longitude': lon,
+        'current': 'temperature_2m,precipitation,wind_speed_10m',
+        'temperature_unit': 'fahrenheit',
+        'precipitation_unit': 'inch',
+        'wind_speed_unit': 'mph',
+    }
+
+    response = requests.get(f'{weather_url}?{urlencode(params)}')
+    res_json = response.json()
+    logging.debug(res_json)
+    curr = res_json['current']
+    units = res_json['current_units']
+
+    return {
+        'weather': {
+            'temperature': f"{curr['temperature_2m']} {units['temperature_2m']}",
+            'precipitation': f"{curr['precipitation']} {units['precipitation']}",
+            'wind_speed': f"{curr['wind_speed_10m']} {units['wind_speed_10m']}"
         }
     }
