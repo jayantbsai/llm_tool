@@ -1,11 +1,11 @@
 # LLM Tool
-Tool to extract and convert the Python function into a tool that can be called
-by a model.
+Library to extract and convert the Python function details into a tool that is
+callable by a LLM.
 
 ### General Notes
-* The goal of the code is to be bare-metal and minimize the use of libraries.
-* This tool is based on [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling) documentation
-* This code is a POC
+* This library code is bare-metal and minimizes use of libraries.
+* It is based on [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling) documentation
+* This code is a proof-of-concept:
     * It has NOT been tested extensively across different LLMs
     * Prompts have not been optimized to ensure model errors/hallucination
 * The code uses Llama 3.1 8b & 70b family of models.
@@ -43,7 +43,7 @@ George Washington was the first president of the United States.
 Enter message (⏎ or ^C to exit): Who was the first ever female prime minister?
 Sirimavo Bandaranaike of Ceylon (now Sri Lanka) was the first female prime minister in the world, serving from 1960 to 1965 and then again from 1970 to 1977, and from 1994 to 2000.
 Enter message (⏎ or ^C to exit): What will the temperature be in London, next Monday?
-The temperature in London next Monday will be between 61.6°F and 74.9°F.
+On Monday, September 16, in London, the temperature will be between 58.8°F and 67.8°F, with no precipitation, and wind speeds ranging from 3.3 to 7.0 miles per hour.
 ```
 
 
