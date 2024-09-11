@@ -34,5 +34,5 @@ def test_weather_forecast(args, expected_date):
     res = get_weather_forecast(args[0], args[1], forecast_date.strftime('%Y-%m-%d'))
     assert('forecast' in res)
     forecast = res.get('forecast')
-    assert('date' in forecast and 'min_temp' in forecast and 'max_temp' in forecast)
+    assert('date' in forecast and 'temperature' in forecast and 'precipitation' in forecast and 'wind_speed' in forecast)
     assert(forecast.get('date') == expected_date)
