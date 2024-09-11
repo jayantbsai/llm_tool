@@ -16,7 +16,7 @@ def get_weather_forecast(lat:float, lon:float, date:datetime) -> dict:
     lon: Longitude for the location. ex: -122.4194
     date: Date to forecast weather in YYYY-MM-DD format. ex: 2024-07-29
 
-    returns: dictionary min/max temperature, precipitation, & wind speed
+    returns: Dictionary of date's temperature, precipitation, & wind speed ranges
     '''
     params = {
         'latitude': lat,
