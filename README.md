@@ -47,6 +47,40 @@ On Monday, September 16, in London, the temperature will be between 58.8°F and 
 ```
 
 
+### Adding Your Function
+You can add your own function easily and make it available to the LLM to call:
+1. Copy/create python file with your function in `src/demo_tools` directory.
+2. In `my_code_file.py`, add `from llmtoolutil import llm_tool_util`
+3. Add documentation for your function. (See [link](src/demo_tools/weather_tool.py#L13))
+4. Add argument & return annotations. (See [link](src/demo_tools/weather_tool.py#L11))
+5. Add `llm_tool` decorator. (See [code](src/demo_tools/weather_tool.py#L10))
+
+Now re-run demo.py
+```
+(.venv) src % python demo.py
+Enter message (⏎ or ^C to exit): <Ask a question to invoke your tool>
+<Model response based on your function should be displayed here>
+```
+
+**Issues:**
+* If your tool is not invoked, enable debug logs. [Uncomment](src/demo.py#L10)
+* Ensure tool is included in prompt:
+```
+<tools>
+[tools_in_json_format]
+</tools>
+```
+* Ensure the function documentation is valid. If successfully loaded, you should see:
+```
+INFO:root:✅ Function `my_function` passes all checks.
+```
+* Else, an appropriate error is printed. For example:
+```
+CRITICAL:root:❌ Function `get_weather_forecast` not added. It may not work as expected when included in prompt.
+ * Missing argument summary for: `lon`
+```
+
+
 ### Running Code
 
 In addition to `demo.py`, the `docextractor.py` and `llmtoolutil.py` can also
@@ -111,5 +145,6 @@ tests/test_llmtoolutil.py ...............FFF............                        
 * Add support for multiple tool calls in single model response
 * Support functions to provide prompt additions for system/user messages
 * Format hints as part of tool response
+* Add retry logic for failures
 * Add support for [Llama 3.1 custom tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#user-defined-custom-tool-calling)
 * Add support for [OpenAI/GPT function calling](https://platform.openai.com/docs/assistants/tools/function-calling)
