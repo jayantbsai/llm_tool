@@ -1,9 +1,12 @@
 # LLM Tool
-Library to extract and convert the Python function details into a tool that is
-callable by a LLM.
+Library to extract and convert Python function details into a tool that is
+callable by LLMs.
+
 
 ### General Notes
-* This library code is bare-metal and minimizes use of libraries.
+* The library code is bare-metal and minimizes use of libraries:
+    * Uses `requests` for making network requests
+    * Uses `pytest` for tests.
 * It is based on [Llama 3.1 JSON tool calling](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/#json-based-tool-calling) documentation
 * This code is a proof-of-concept:
     * It has NOT been tested extensively across different LLMs
@@ -23,6 +26,7 @@ llm_tool % source .venv/bin/activate
 (.venv) llm_tool % pip install -r requirements.txt
 ```
 
+
 ### Groq (Recommended)
 Navigate to [Groq](https://console.groq.com/docs/quickstart) and generate new
 API key.
@@ -31,6 +35,7 @@ Create a new file `src/.env` file and add generated API key.
 ```
 GROQ_API_KEY=<groq api key>
 ```
+
 
 ### Run Demo
 
