@@ -15,6 +15,8 @@ from demo_tools import *
 ### Initialize
 load_dotenv()
 
+no_func_regex = r'^no.(function|tool).*.available'
+
 
 class Demo:
     def __init__(self) -> None:
@@ -50,7 +52,7 @@ class Demo:
 
         # if model responds that there is 'no function/tool to answer' OR calls a
         # non-existent tool, force it use training data
-        if (re.search(r'^no.(function|tool).*.available', response, re.IGNORECASE) != None
+        if (re.search(no_func_regex, response, re.IGNORECASE) != None
             or (llm_tool_util.is_tool_call(response)
                 and not llm_tool_util.can_handle_tool_call(response))):
             response = self._client.request('Use your training data to respond.')
