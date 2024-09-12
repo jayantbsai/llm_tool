@@ -1,7 +1,7 @@
 import pytest
 import re
 
-from demo import Demo
+from demo import Demo, no_func_regex
 from llmtoolutil import llm_tool_util
 
 @pytest.mark.parametrize('prompt, regexs', [
@@ -31,3 +31,42 @@ def test_demo_request(prompt:str, regexs:list):
     
     for regx in regexs:
         assert(re.search(regx, response.lower(), re.IGNORECASE) != None)
+
+
+@pytest.mark.parametrize('response, expected', [
+    (
+        'No function available for this prompt.',
+        (0, 21)
+    ),
+    (
+        'No tool call available for this user.',
+        (0, 22)
+    ),
+    (
+        'No function call available for this request',
+        (0, 26)
+    ),
+    (
+        'No tool available to give you an answer',
+        (0, 17)
+    ),
+    (
+        'blah no blah func blah available',
+        None
+    ),
+    (
+       'no no no',
+       None
+    ),
+    (
+       'I can\'t find no tool available yo!',
+       None
+    )
+])
+
+def test_no_tool_available(response:str, expected:tuple|None):
+    match = re.search(no_func_regex, response, re.IGNORECASE)
+    if match is None:
+        assert(match == expected)
+    else:
+        assert(match.span() == expected)
