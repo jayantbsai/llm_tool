@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -47,13 +48,11 @@ class Demo:
         response = self._client.request(user_message)
         logging.debug(f"response = {response}")
 
-        # if model responds that there is no tool/function to answer OR calls a
+        # if model responds that there is 'no function/tool to answer' OR calls a
         # non-existent tool, force it use training data
-        if ((response.startswith('No function available')
-             or response.startswith('No function call available')
-             or response.startswith('No tool available'))
-             or (llm_tool_util.is_tool_call(response)
-                 and not llm_tool_util.can_handle_tool_call(response))):
+        if (re.search(r'^no.(function|tool).*.available', response, re.IGNORECASE) != None
+            or (llm_tool_util.is_tool_call(response)
+                and not llm_tool_util.can_handle_tool_call(response))):
             response = self._client.request('Use your training data to respond.')
 
         # check llm_tool_util, for tools that can handle response
