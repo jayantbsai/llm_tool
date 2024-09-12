@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 from os import getenv
 from os.path import abspath, dirname
 
+# Uncomment following line to see debug logs
+logging.getLogger().setLevel(logging.DEBUG)
+
 from llmclient import LLMClient
 from llmtoolutil import llm_tool_util
 
@@ -72,9 +75,6 @@ class Demo:
 # DEMO #
 ########
 if __name__ == "__main__":
-    # Uncomment following line to see debug logs
-    # logging.getLogger().setLevel(logging.DEBUG)
-
     assistant = Demo()
 
     while True:
