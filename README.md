@@ -68,7 +68,7 @@ Enter message (⏎ or ^C to exit): <Ask a question to invoke your tool>
 ```
 
 **Issues:**
-* If your tool is not invoked, enable debug logs. [Uncomment](src/demo.py#L10)
+* If your tool is not invoked, enable debug logs. [Uncomment](src/demo.py#L11)
 * Ensure tool is included in prompt:
 ```
 <tools>
