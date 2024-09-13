@@ -56,9 +56,9 @@ On Monday, September 16, in London, the temperature will be between 58.8°F and 
 You can add your own function easily and make it available to the LLM to call:
 1. Copy/create python file with your function in `src/demo_tools` directory.
 2. In `my_code_file.py`, add `from llmtoolutil import llm_tool_util`
-3. Add documentation for your function. (Ex [link](src/demo_tools/weather_tool.py#L12C5-L20C11))
-4. Add argument & return annotations. (Ex [link](src/demo_tools/weather_tool.py#L11))
-5. Add `llm_tool` decorator. (Ex [code](src/demo_tools/weather_tool.py#L10))
+3. **Annotate** the function argument & returns. (Ex [link](src/demo_tools/weather_tool.py#L11))
+4. **Document** for your function. (Ex [link](src/demo_tools/weather_tool.py#L12C5-L20C11))
+5. **Decorate** function as `@llm_tool`. (Ex [code](src/demo_tools/weather_tool.py#L10))
 
 Run demo.py to test:
 ```
