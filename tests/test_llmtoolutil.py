@@ -229,11 +229,9 @@ def test_llm_tool_addition(func, expected_logs):
     ])
 
 def test_get_func_details(func, expected_list):
+    llm_tool_util._clear_tools()
     llm_tool_util.llm_tool(func)
     assert(llm_tool_util.generate_tool_markup() == expected_list)
-
-    llm_tool_util._clear_tools()
-
 
 
 ### Test llm_tool.is_tool_call ###
