@@ -1,7 +1,7 @@
 import pytest
 import re
 
-from demo import Demo, no_func_regex
+from assistant import Assistant, no_func_regex
 from llmtoolutil import llm_tool_util
 
 @pytest.mark.parametrize('prompt, regexs', [
@@ -23,10 +23,10 @@ from llmtoolutil import llm_tool_util
     )
 ])
 
-def test_demo_request(prompt:str, regexs:list):
+def test_assistant_request(prompt:str, regexs:list):
     assert('get_weather_forecast' in llm_tool_util._tool_funcs)
 
-    assistant = Demo()
+    assistant = Assistant()
     response = assistant.handle(prompt)
     
     for regx in regexs:

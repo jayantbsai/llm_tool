@@ -13,7 +13,7 @@ callable by LLMs.
     * Prompts have not been optimized to ensure model errors/hallucination
 * The code uses Llama 3.1 8b & 70b family of models.
     * [8b](https://console.groq.com/docs/models#llama-31-8b-preview): Python docstring extraction
-    * [70b](https://console.groq.com/docs/models#llama-31-70b-preview): Tool calling and demo assistant response
+    * [70b](https://console.groq.com/docs/models#llama-31-70b-preview): Tool calling and assistant response
 
 
 ## Setup
@@ -37,12 +37,12 @@ GROQ_API_KEY=<groq api key>
 ```
 
 
-### Run Demo
+### Run Assistant
 
-Run demo app to ask questions and check weather forecast. _(model output can vary, but should be similar)_
+Run assistant to ask questions and check weather forecast. _(model output can vary, but should be similar)_
 ```
 (.venv) llm_tool % cd src
-(.venv) src % python demo.py
+(.venv) src % python assistant.py
 Enter message (⏎ or ^C to exit): Who was the first president of the united states?
 George Washington was the first president of the United States.
 Enter message (⏎ or ^C to exit): Who was the first ever female prime minister?
@@ -54,21 +54,21 @@ On Monday, September 16, in London, the temperature will be between 58.8°F and 
 
 ### Adding Your Function
 You can add your own function easily and make it available to the LLM to call:
-1. Copy/create python file with your function in `src/demo_tools` directory.
+1. Copy/create python file with your function in `src/tools` directory.
 2. In `my_code_file.py`, add `from llmtoolutil import llm_tool_util`
-3. **Annotate** the function arguments & return types. (Ex [function signature](src/demo_tools/weather_tool.py#L11))
-4. **Document** function description and each argument. (Ex [docs](src/demo_tools/weather_tool.py#L12C5-L20C11))
-5. **Decorate** function with `@llm_tool_util.llm_tool`. (Ex [decorator](src/demo_tools/weather_tool.py#L10))
+3. **Annotate** the function arguments & return types. (Ex [function signature](src/tools/weather_tool.py#L11))
+4. **Document** function description and each argument. (Ex [docs](src/tools/weather_tool.py#L12C5-L20C11))
+5. **Decorate** function with `@llm_tool_util.llm_tool`. (Ex [decorator](src/tools/weather_tool.py#L10))
 
-Run demo.py to test:
+Run assistant.py to test:
 ```
-(.venv) src % python demo.py
+(.venv) src % python assistant.py
 Enter message (⏎ or ^C to exit): <Ask a question to invoke your tool>
 <Model response based on your function response should be displayed here>
 ```
 
 **Issues:**
-* If your tool is not invoked, [uncomment code](src/demo.py#L11) and re-run.
+* If your tool is not invoked, [uncomment code](src/assistant.py#L11) and re-run.
 * Ensure tool is included in prompt:
 ```
 <tools>
@@ -88,7 +88,7 @@ CRITICAL:root:❌ Function `get_weather_forecast` not added. It may not work as 
 
 ### Running Code
 
-In addition to `demo.py`, the `docextractor.py` and `llmtoolutil.py` can also
+In addition to `assistant.py`, the `docextractor.py` and `llmtoolutil.py` can also
 be run from the command line.
 
 Running `docextractor.py` prints docstring and dictionary returned by model
@@ -123,8 +123,8 @@ platform darwin -- Python 3.11.6, pytest-8.3.2, pluggy-1.5.0
 rootdir: /llm_tool
 collected 59 items
 
-tests/demo_tools/test_weather_tool.py .....                                         [  8%]
-tests/test_demo.py ....                                                             [ 15%]
+tests/tools/test_weather_tool.py .....                                              [  8%]
+tests/test_assistant.py ....                                                        [ 15%]
 tests/test_docextractor.py ................F...                                     [ 49%]
 tests/test_llmtoolutil.py ...............FFF............                            [100%]
 
@@ -141,7 +141,7 @@ tests/test_llmtoolutil.py ...............FFF............                        
 
 ## TODOs:
 * Add tests for `llmtoolgen.handle_tool_call`
-* Update `doc_extractor` & `demo` prompts to reduce errors
+* Update `doc_extractor` & `assistant` prompts to reduce errors
     * `two_args_yes_type_no_return` extraction summary periodically returns `""`
     * `dates` are sometimes not in `YYYY-MM-DD` format
     * General knowledge questions should use training data and not non-existent tools

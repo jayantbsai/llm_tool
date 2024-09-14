@@ -13,7 +13,7 @@ from os.path import abspath, dirname
 from llmclient import LLMClient
 from llmtoolutil import llm_tool_util
 
-from demo_tools import *
+from tools import *
 
 ### Initialize
 load_dotenv()
@@ -21,12 +21,12 @@ load_dotenv()
 no_func_regex = r'^no.(function|tool).*.available'
 
 
-class Demo:
+class Assistant:
     def __init__(self) -> None:
         """
-        Initialize Demo App.
+        Initialize Assistant.
         """
-        system_prompt = open(f'{dirname(abspath(__file__))}/prompts/demo.md').read()
+        system_prompt = open(f'{dirname(abspath(__file__))}/prompts/assistant.md').read()
         system_message = system_prompt.format(date=datetime.today().strftime('%Y-%m-%d'),
                                               tools=json.dumps(llm_tool_util.generate_tool_markup()))
         logging.debug(system_message)
@@ -71,11 +71,11 @@ class Demo:
 
 
 
-########
-# DEMO #
-########
+#################
+# Run Assistant #
+#################
 if __name__ == "__main__":
-    assistant = Demo()
+    assistant = Assistant()
 
     while True:
         try:
